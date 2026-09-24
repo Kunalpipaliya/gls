@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" fill="none">
-  <circle cx="25" cy="25" r="23" stroke="#1E40AF" stroke-width="2" fill="#EFF6FF"/>
-  <circle cx="25" cy="25" r="19" stroke="#1E40AF" stroke-width="0.75" stroke-dasharray="2 2"/>
-  <text x="25" y="21" text-anchor="middle" font-family="system-ui" font-weight="900" font-size="9" fill="#1E40AF">ISO</text>
-  <text x="25" y="29" text-anchor="middle" font-family="system-ui" font-weight="800" font-size="6.5" fill="#1E40AF">22000:2018</text>
-  <text x="25" y="37" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="4.5" fill="#1E3A8A">CERTIFIED</text>
-</svg>

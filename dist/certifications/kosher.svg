@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" fill="none">
-  <circle cx="25" cy="25" r="23" stroke="#0D9488" stroke-width="2" fill="#F0FDFA"/>
-  <circle cx="25" cy="25" r="19" stroke="#0D9488" stroke-width="0.75" stroke-dasharray="2 2"/>
-  <text x="25" y="24" text-anchor="middle" font-family="system-ui" font-weight="900" font-size="8.5" fill="#0D9488">KOSHER</text>
-  <text x="25" y="34" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="5" fill="#115E59">CERTIFIED</text>
-</svg>

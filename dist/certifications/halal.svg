@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" fill="none">
-  <circle cx="25" cy="25" r="23" stroke="#047857" stroke-width="2" fill="#ECFDF5"/>
-  <circle cx="25" cy="25" r="19" stroke="#047857" stroke-width="0.75" stroke-dasharray="2 2"/>
-  <text x="25" y="24" text-anchor="middle" font-family="system-ui" font-weight="900" font-size="9" fill="#047857">HALAL</text>
-  <text x="25" y="34" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="5" fill="#065F46">CERTIFIED</text>
-</svg>
