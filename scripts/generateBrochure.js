@@ -1,0 +1,832 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Helper to escape PDF text
+function escapePdfText(text) {
+  return text.replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)');
+}
+
+// Clean helper to build PDF
+export function generateCatalogPdf() {
+  const objects = [];
+  let currentOffset = 0;
+
+  function addObject(content) {
+    const objNum = objects.length + 1;
+    const body = `${objNum} 0 obj\n${content}\nendobj\n`;
+    objects.push({ num: objNum, body });
+    return objNum;
+  }
+
+  // We will have 4 pages
+  // Page 1: Cover
+  // Page 2: Functional Protein Beverages (Spiced Tea & Mocha Coffee)
+  // Page 3: Functional Staples (Multi Grain Atta & Wellness Trio)
+  // Page 4: Quality Verification & Wholesale B2B Distribution
+
+  // Object 1: Catalog (placeholder, defined after)
+  // Object 2: Pages (placeholder)
+  // Fonts: /F1 (Helvetica), /F2 (Helvetica-Bold), /F3 (Helvetica-Oblique)
+  
+  // Let's create content streams for each page
+  
+  // --- PAGE 1: COVER ---
+  const page1Stream = `
+q
+% Dark header background
+0.094 0.071 0.051 rg
+0 0 595 842 re f
+
+% Warm decorative banner
+0.522 0.267 0.133 rg
+0 600 595 242 re f
+
+% Accent line
+0.863 0.604 0.447 rg
+0 595 595 5 re f
+
+% Top badge
+BT
+/F2 10 Tf
+1 1 1 rg
+50 780 Td
+(GOMZI LIFESCIENCES OFFICIAL PRODUCT COMPENDIUM - 2026 EDITION) Tj
+ET
+
+% Company Title
+BT
+/F2 36 Tf
+1 1 1 rg
+50 720 Td
+(GOMZI LIFESCIENCES) Tj
+ET
+
+BT
+/F1 15 Tf
+0.95 0.85 0.75 rg
+50 690 Td
+(Science-Backed Functional Daily Nutrition & Protein Formulations) Tj
+ET
+
+BT
+/F2 11 Tf
+1 1 1 rg
+50 655 Td
+(OFFICIAL PRODUCT CATALOG & FORMULATION SPECIFICATION) Tj
+ET
+
+% Middle content box
+0.14 0.11 0.08 rg
+40 180 515 380 re f
+0.863 0.604 0.447 RG
+1.5 w
+40 180 515 380 re S
+
+BT
+/F2 20 Tf
+0.95 0.65 0.35 rg
+65 520 Td
+(Redefining Everyday Indian Staples with Real Protein) Tj
+ET
+
+BT
+/F1 11 Tf
+0.9 0.9 0.9 rg
+65 485 Td
+(At Gomzi Lifesciences, our clinical mission is to bridge India's severe 73% protein deficit) Tj
+65 468 Td
+(without disrupting traditional culinary habits. By fortifying authentic daily staples) Tj
+65 451 Td
+(including Masala Chai, Morning Arabica Coffee, and Multi-Grain Roti Atta with bioavailable,) Tj
+65 434 Td
+(micro-filtered protein and natural herbs, we empower healthy longevity for every family.) Tj
+ET
+
+% Highlights Grid
+0.522 0.267 0.133 rg
+65 375 220 35 re f
+305 375 225 35 re f
+65 325 220 35 re f
+305 325 225 35 re f
+
+BT
+/F2 11 Tf
+1 1 1 rg
+75 390 Td
+(5g Pure Protein in Every Chai & Coffee) Tj
+ET
+
+BT
+/F2 11 Tf
+1 1 1 rg
+315 390 Td
+(28% Protein in Multi Grain Atta) Tj
+ET
+
+BT
+/F2 11 Tf
+1 1 1 rg
+75 340 Td
+(100% Vegetarian & Plant-Friendly) Tj
+ET
+
+BT
+/F2 11 Tf
+1 1 1 rg
+315 340 Td
+(Assure Labs 3rd-Party Certified) Tj
+ET
+
+BT
+/F2 13 Tf
+0.95 0.65 0.35 rg
+65 280 Td
+(Key Formulation Pillars:) Tj
+ET
+
+BT
+/F1 10 Tf
+0.85 0.85 0.85 rg
+65 255 Td
+(* Zero Added Cane Sugar - Formulated with 100% Natural Stevia Leaf Extracts) Tj
+65 238 Td
+(* 100% Natural Spices: Ceylon Cinnamon, Green Cardamom, Ginger & Cloves) Tj
+65 221 Td
+(* Tested for Zero Heavy Metals, Zero Pesticides, and Zero Amino Spiking) Tj
+65 204 Td
+(* Certified FSSAI, ISO 22000:2018, GMP, and HACCP Manufacturing Facilities) Tj
+ET
+
+% Footer
+BT
+/F1 9 Tf
+0.65 0.65 0.65 rg
+50 140 Td
+(Headquarters: Gomzi Tower, Ring Road, Surat, Gujarat - 395002 | care@gomzilifesciences.com | +91 98752 70200) Tj
+ET
+
+BT
+/F2 10 Tf
+0.863 0.604 0.447 rg
+50 115 Td
+(Confidential & Proprietary - Gomzi Lifesciences Private Limited - All Rights Reserved 2026) Tj
+ET
+
+Q
+`;
+
+  // --- PAGE 2: BEVERAGES ---
+  const page2Stream = `
+q
+% White background
+1 1 1 rg
+0 0 595 842 re f
+
+% Top bar
+0.094 0.071 0.051 rg
+0 782 595 60 re f
+0.522 0.267 0.133 rg
+0 778 595 4 re f
+
+BT
+/F2 18 Tf
+1 1 1 rg
+40 802 Td
+(CATEGORY 01: FUNCTIONAL PROTEIN BEVERAGES) Tj
+ET
+
+BT
+/F1 10 Tf
+0.9 0.8 0.7 rg
+400 804 Td
+(Gomzi Lifesciences Catalog 2026) Tj
+ET
+
+% PRODUCT 1: INSTANT SPICED TEA
+0.97 0.96 0.94 rg
+35 440 525 315 re f
+0.85 0.82 0.78 RG
+1 w
+35 440 525 315 re S
+
+0.522 0.267 0.133 rg
+45 715 180 26 re f
+BT
+/F2 11 Tf
+1 1 1 rg
+55 723 Td
+(BEST SELLER - 5G PROTEIN) Tj
+ET
+
+BT
+/F2 16 Tf
+0.094 0.071 0.051 rg
+45 688 Td
+(1. Instant Spiced Tea (Kadak Masala Chai)) Tj
+ET
+
+BT
+/F3 10 Tf
+0.4 0.3 0.2 rg
+45 670 Td
+(Tagline: Masala Tea Made Better - 5g Micro-Filtered Protein In Every Cup) Tj
+ET
+
+BT
+/F1 9.5 Tf
+0.2 0.2 0.2 rg
+45 645 Td
+(Handpicked Assam black tea extracts blended with micro-filtered bioavailable protein and) Tj
+45 632 Td
+(freshly crushed whole spices: sun-dried ginger, green cardamom, Ceylon cinnamon, and cloves.) Tj
+45 619 Td
+(Zero added refined sugars, zero chemical colors, and zero artificial preservatives.) Tj
+ET
+
+% Nutritional Table Box
+0.92 0.91 0.88 rg
+45 530 505 75 re f
+BT
+/F2 9.5 Tf
+0.1 0.1 0.1 rg
+55 588 Td
+(Nutritional Facts (Per 14g Sachet):) Tj
+ET
+BT
+/F1 9 Tf
+0.2 0.2 0.2 rg
+55 570 Td
+(Protein: 5.0 g   |   Energy: 49 kcal   |   Total Fat: 0.4 g   |   Carbs: 2.8 g   |   Added Sugar: 0.0 g) Tj
+55 554 Td
+(Dietary Fibre: 1.2 g   |   Tea Caffeine: 35 mg (Gentle Theanine)   |   Antioxidant Polyphenols: 140 mg) Tj
+55 538 Td
+(Ingredients: Assam Tea, Whey Protein Isolate, Ginger, Cardamom, Cinnamon, Cloves, Stevia.) Tj
+ET
+
+% Pricing & Lab testing
+BT
+/F2 10 Tf
+0.522 0.267 0.133 rg
+45 500 Td
+(Commercial SKUs & Pricing:) Tj
+ET
+BT
+/F1 9 Tf
+0.2 0.2 0.2 rg
+45 484 Td
+(* Pack of 10 Sachets (140g): Rs. 379 (MRP Rs. 499) - Ideal personal pack) Tj
+45 470 Td
+(* Monthly Box of 30 Sachets (420g): Rs. 999 (MRP Rs. 1,497) - Best value pack) Tj
+45 454 Td
+(* Quality Certificate: Lab Report #AAL-GLS-TEA-2026-0814 by Assure Analytical Laboratories LLP) Tj
+ET
+
+% PRODUCT 2: INSTANT MOCHA COFFEE
+0.97 0.96 0.94 rg
+35 95 525 325 re f
+0.85 0.82 0.78 RG
+1 w
+35 95 525 325 re S
+
+0.2 0.12 0.06 rg
+45 380 180 26 re f
+BT
+/F2 11 Tf
+1 1 1 rg
+55 388 Td
+(APEX VITALS - 100% ARABICA) Tj
+ET
+
+BT
+/F2 16 Tf
+0.094 0.071 0.051 rg
+45 350 Td
+(2. Instant Mocha Coffee (Apex Vitals Series)) Tj
+ET
+
+BT
+/F3 10 Tf
+0.4 0.3 0.2 rg
+45 332 Td
+(Tagline: Mocha Moments Better You - 5g Protein & Medium Roasted Arabica) Tj
+ET
+
+BT
+/F1 9.5 Tf
+0.2 0.2 0.2 rg
+45 307 Td
+(Premium medium-roasted Arabica coffee beans united with Dutch-processed dark cocoa and) Tj
+45 294 Td
+(5 grams of cold-processed instantized whey protein isolate. Designed to eliminate afternoon) Tj
+45 281 Td
+(fatigue and brain fog, delivering 75mg natural caffeine with muscle recovery nutrients.) Tj
+ET
+
+% Nutritional Table Box
+0.92 0.91 0.88 rg
+45 192 505 75 re f
+BT
+/F2 9.5 Tf
+0.1 0.1 0.1 rg
+55 250 Td
+(Nutritional Facts (Per 14g Sachet):) Tj
+ET
+BT
+/F1 9 Tf
+0.2 0.2 0.2 rg
+55 232 Td
+(Protein: 5.0 g   |   Energy: 52 kcal   |   Total Fat: 0.6 g   |   Carbs: 3.2 g   |   Added Sugar: 0.0 g) Tj
+55 216 Td
+(Dietary Fibre: 1.1 g   |   Natural Caffeine: 75 mg   |   Cocoa Flavonoids: High Bioactivity) Tj
+55 200 Td
+(Ingredients: Arabica Coffee, Whey Protein Isolate, Dutch Cocoa, MCT Oil Extract, Stevia.) Tj
+ET
+
+% Pricing & Lab testing
+BT
+/F2 10 Tf
+0.522 0.267 0.133 rg
+45 162 Td
+(Commercial SKUs & Pricing:) Tj
+ET
+BT
+/F1 9 Tf
+0.2 0.2 0.2 rg
+45 146 Td
+(* Pack of 10 Sachets (140g): Rs. 399 (MRP Rs. 499)) Tj
+45 132 Td
+(* Monthly Box of 30 Sachets (420g): Rs. 1,049 (MRP Rs. 1,499)) Tj
+45 116 Td
+(* Quality Certificate: Lab Report #AAL-GLS-COF-2026-0819 (Zero Aflatoxins, 100% Purity Passed)) Tj
+ET
+
+% Footer
+BT
+/F1 8 Tf
+0.5 0.5 0.5 rg
+40 30 Td
+(Page 2 | Gomzi Lifesciences Product Catalog 2026 | www.gomzilifesciences.com | +91 98752 70200) Tj
+ET
+
+Q
+`;
+
+  // --- PAGE 3: STAPLES & COMBOS ---
+  const page3Stream = `
+q
+% White background
+1 1 1 rg
+0 0 595 842 re f
+
+% Top bar
+0.094 0.071 0.051 rg
+0 782 595 60 re f
+0.522 0.267 0.133 rg
+0 778 595 4 re f
+
+BT
+/F2 18 Tf
+1 1 1 rg
+40 802 Td
+(CATEGORY 02: FUNCTIONAL STAPLES & BUNDLES) Tj
+ET
+
+BT
+/F1 10 Tf
+0.9 0.8 0.7 rg
+400 804 Td
+(Gomzi Lifesciences Catalog 2026) Tj
+ET
+
+% PRODUCT 3: MULTI GRAIN ATTA
+0.97 0.96 0.94 rg
+35 430 525 325 re f
+0.85 0.82 0.78 RG
+1 w
+35 430 525 325 re S
+
+0.24 0.38 0.22 rg
+45 710 200 26 re f
+BT
+/F2 11 Tf
+1 1 1 rg
+55 718 Td
+(DAILY STAPLE - 28% PROTEIN) Tj
+ET
+
+BT
+/F2 16 Tf
+0.094 0.071 0.051 rg
+45 678 Td
+(3. Multi Grain Atta with Protein (Fluffy & Soft Rotis)) Tj
+ET
+
+BT
+/F3 10 Tf
+0.4 0.3 0.2 rg
+45 660 Td
+(Tagline: Goodness of Protein in Every Roti - Up to 3x More Protein than Regular Wheat) Tj
+ET
+
+BT
+/F1 9.5 Tf
+0.2 0.2 0.2 rg
+45 635 Td
+(Revolutionary daily flour formulated with premium MP Sharbati wheat, roasted Bengal gram) Tj
+45 622 Td
+((chana dal), whole rolled oats, soya protein isolate, defatted flaxseeds, and psyllium husk.) Tj
+45 609 Td
+(Features a proven Low Glycemic Index (GI), preventing glucose spikes and keeping rotis soft.) Tj
+ET
+
+% Nutritional Table Box
+0.92 0.91 0.88 rg
+45 520 505 75 re f
+BT
+/F2 9.5 Tf
+0.1 0.1 0.1 rg
+55 578 Td
+(Nutritional Profile (Per 100g Flour - approx 3 to 4 rotis):) Tj
+ET
+BT
+/F1 9 Tf
+0.2 0.2 0.2 rg
+55 560 Td
+(Protein: 28.0 g (Highest in class)   |   Energy: 362 kcal   |   Total Fat: 3.8 g) Tj
+55 544 Td
+(Dietary Fibre: 14.5 g (Soluble + Insoluble)   |   Carbohydrates: 54.0 g   |   Zero Added Preservatives) Tj
+55 528 Td
+(Ingredients: MP Sharbati Wheat, Roasted Chana Dal, Oats, Soya Protein, Flaxseeds, Isabgol.) Tj
+ET
+
+% Pricing & Lab testing
+BT
+/F2 10 Tf
+0.522 0.267 0.133 rg
+45 490 Td
+(Commercial SKUs & Packaging:) Tj
+ET
+BT
+/F1 9 Tf
+0.2 0.2 0.2 rg
+45 474 Td
+(* 500g Fresh Resealable Zip Pouch: Rs. 249 (MRP Rs. 329) - Yields approx 16 rotis) Tj
+45 460 Td
+(* 1kg Family Value Pack (2 x 500g): Rs. 469 (MRP Rs. 658) - Yields approx 32 rotis) Tj
+45 446 Td
+(* 5kg Monthly Bulk Box (10 x 500g): Rs. 2,199 (MRP Rs. 3,290) - Yields approx 160 rotis) Tj
+ET
+
+% PRODUCT 4: DAILY WELLNESS TRIO
+0.97 0.96 0.94 rg
+35 95 525 315 re f
+0.85 0.82 0.78 RG
+1 w
+35 95 525 315 re S
+
+0.522 0.267 0.133 rg
+45 370 200 26 re f
+BT
+/F2 11 Tf
+1 1 1 rg
+55 378 Td
+(BEST VALUE COMBO - SAVE 28%) Tj
+ET
+
+BT
+/F2 16 Tf
+0.094 0.071 0.051 rg
+45 340 Td
+(4. Daily Wellness Trio Bundle (The Complete Regimen)) Tj
+ET
+
+BT
+/F3 10 Tf
+0.4 0.3 0.2 rg
+45 322 Td
+(Tagline: Complete 24-Hour Functional Nutrition from Morning Chai to Evening Roti) Tj
+ET
+
+BT
+/F1 9.5 Tf
+0.2 0.2 0.2 rg
+45 297 Td
+(Experience all three signature Gomzi Lifesciences innovations in one comprehensive package.) Tj
+45 284 Td
+(Designed for active professionals, fitness enthusiasts, and health-conscious families.) Tj
+ET
+
+% Included box
+0.92 0.91 0.88 rg
+45 195 505 75 re f
+BT
+/F2 9.5 Tf
+0.1 0.1 0.1 rg
+55 253 Td
+(Bundle Contents & Daily Health Schedule:) Tj
+ET
+BT
+/F1 9 Tf
+0.2 0.2 0.2 rg
+55 235 Td
+(1. Morning: Instant Spiced Masala Tea (10 sachets) - Clean digestive metabolic wakeup) Tj
+55 219 Td
+(2. Afternoon: Instant Mocha Coffee (10 sachets) - Arabica focus and anti-fatigue boost) Tj
+55 203 Td
+(3. Evening / Dinner: Multi Grain Atta (500g) - Wholesome rotis with 28% bio-available protein) Tj
+ET
+
+% Pricing & Lab testing
+BT
+/F2 10 Tf
+0.522 0.267 0.133 rg
+45 165 Td
+(Combo Pricing & Order Specifications:) Tj
+ET
+BT
+/F1 9 Tf
+0.2 0.2 0.2 rg
+45 149 Td
+(* Complete Trio Pack Price: Rs. 899 (Combined MRP Rs. 1,247) - Instant Rs. 348 Savings) Tj
+45 135 Td
+(* Shipping: Complimentary Pan-India express courier with temperature-controlled barrier packaging) Tj
+45 119 Td
+(* Shelf Life: 12 Months from Manufacturing Date under cool, dry storage conditions) Tj
+ET
+
+% Footer
+BT
+/F1 8 Tf
+0.5 0.5 0.5 rg
+40 30 Td
+(Page 3 | Gomzi Lifesciences Product Catalog 2026 | www.gomzilifesciences.com | +91 98752 70200) Tj
+ET
+
+Q
+`;
+
+  // --- PAGE 4: CERTIFICATIONS & B2B WHOLESALE ---
+  const page4Stream = `
+q
+% White background
+1 1 1 rg
+0 0 595 842 re f
+
+% Top bar
+0.094 0.071 0.051 rg
+0 782 595 60 re f
+0.522 0.267 0.133 rg
+0 778 595 4 re f
+
+BT
+/F2 18 Tf
+1 1 1 rg
+40 802 Td
+(QUALITY STANDARDS, LAB TESTING & B2B ORDERS) Tj
+ET
+
+BT
+/F1 10 Tf
+0.9 0.8 0.7 rg
+400 804 Td
+(Gomzi Lifesciences Catalog 2026) Tj
+ET
+
+% SECTION 1: QUALITY & 3RD PARTY TESTING
+0.97 0.96 0.94 rg
+35 480 525 275 re f
+0.85 0.82 0.78 RG
+1 w
+35 480 525 275 re S
+
+BT
+/F2 15 Tf
+0.094 0.071 0.051 rg
+50 725 Td
+(1. Rigorous 3rd-Party Analytical Laboratory Testing) Tj
+ET
+
+BT
+/F1 9.5 Tf
+0.2 0.2 0.2 rg
+50 700 Td
+(Every single batch manufactured by Gomzi Lifesciences undergoes independent laboratory) Tj
+50 687 Td
+(analysis conducted by Assure Analytical Laboratories LLP (NABL Accredited Facility).) Tj
+ET
+
+% Testing points
+0.92 0.91 0.88 rg
+50 565 495 105 re f
+BT
+/F2 9.5 Tf
+0.1 0.1 0.1 rg
+60 650 Td
+(Assay Parameters Verified on Every Production Lot:) Tj
+ET
+BT
+/F1 9 Tf
+0.2 0.2 0.2 rg
+60 632 Td
+(* Protein Assay via Kjeldahl Method: 100% label claim verified (True 5.0g - 5.12g per serving)) Tj
+60 616 Td
+(* Heavy Metals ICP-MS Screen: Lead (Pb), Arsenic (As), Cadmium (Cd), Mercury (Hg) < 0.01 ppm) Tj
+60 600 Td
+(* Microbial Analysis: Negative for Salmonella, E. Coli, Staph Aureus, Yeast & Molds) Tj
+60 584 Td
+(* Aflatoxins & Pesticides: Complete screen confirms 100% zero toxic agrochemical residues) Tj
+ET
+
+BT
+/F2 10 Tf
+0.522 0.267 0.133 rg
+50 535 Td
+(Accreditations & Regulatory Compliance:) Tj
+ET
+BT
+/F1 9 Tf
+0.2 0.2 0.2 rg
+50 519 Td
+(* FSSAI Central License: Certified under Food Safety & Standards Authority of India) Tj
+50 505 Td
+(* ISO 22000:2018 Certified Food Safety Management System & Good Manufacturing Practices (GMP)) Tj
+50 491 Td
+(* HACCP Food Hazard Prevention Certification & 100% Vegetarian Green Dot Compliance) Tj
+ET
+
+% SECTION 2: B2B DISTRIBUTION & BULK PARTNERSHIP
+0.97 0.96 0.94 rg
+35 90 525 365 re f
+0.85 0.82 0.78 RG
+1 w
+35 90 525 365 re S
+
+BT
+/F2 15 Tf
+0.094 0.071 0.051 rg
+50 420 Td
+(2. Wholesale, Retail Distribution & Institutional Supply) Tj
+ET
+
+BT
+/F1 9.5 Tf
+0.2 0.2 0.2 rg
+50 395 Td
+(We partner with modern trade supermarkets, specialty health food stores, corporate cafeterias,) Tj
+50 382 Td
+(fitness centers, hotels, and regional distributors across India and international markets.) Tj
+ET
+
+% B2B Tier table
+0.92 0.91 0.88 rg
+50 240 495 125 re f
+BT
+/F2 9.5 Tf
+0.1 0.1 0.1 rg
+60 345 Td
+(Wholesale Tier Pricing Structure:) Tj
+ET
+BT
+/F1 9 Tf
+0.2 0.2 0.2 rg
+60 327 Td
+(Tier A (Corporate Pantries & Cafes): 50 - 200 units/mo  |  Wholesale Discount: 30% off MRP) Tj
+60 311 Td
+(Tier B (Gyms & Wellness Retailers): 200 - 1,000 units/mo  |  Wholesale Discount: 40% off MRP) Tj
+60 295 Td
+(Tier C (Regional Supermarkets & Stockists): 1,000+ units/mo  |  Distributor Margin: 48% off MRP) Tj
+60 279 Td
+(Private Label & Institutional Packaging: Available upon agreement for minimum 5,000 units) Tj
+60 263 Td
+(Payment Terms: Net 15 Days for certified corporate partners; GST credit invoices provided) Tj
+ET
+
+% Contact Box
+0.14 0.11 0.08 rg
+50 110 495 110 re f
+
+BT
+/F2 12 Tf
+0.95 0.65 0.35 rg
+65 195 Td
+(Official Corporate Headquarters & Order Desk:) Tj
+ET
+
+BT
+/F1 9.5 Tf
+1 1 1 rg
+65 175 Td
+(Company: Gomzi Lifesciences Private Limited) Tj
+65 160 Td
+(Address: Gomzi Tower, Ring Road, Surat, Gujarat - 395002, India) Tj
+65 145 Td
+(Direct Phone / WhatsApp: +91 98752 70200 (10:00 AM - 7:00 PM IST)) Tj
+65 130 Td
+(Emails: care@gomzilifesciences.com  |  wholesale@gomzilifesciences.com) Tj
+65 117 Td
+(Official Portal: https://www.gomzilifesciences.com) Tj
+ET
+
+% Footer
+BT
+/F1 8 Tf
+0.5 0.5 0.5 rg
+40 30 Td
+(Page 4 | Gomzi Lifesciences Product Catalog 2026 | www.gomzilifesciences.com | +91 98752 70200) Tj
+ET
+
+Q
+`;
+
+  // Content objects
+  // Obj 1: Catalog
+  // Obj 2: Outlines
+  // Obj 3: Pages
+  // Obj 4: Font F1 (Helvetica)
+  // Obj 5: Font F2 (Helvetica-Bold)
+  // Obj 6: Font F3 (Helvetica-Oblique)
+  // Obj 7: Page 1
+  // Obj 8: Page 1 Content
+  // Obj 9: Page 2
+  // Obj 10: Page 2 Content
+  // Obj 11: Page 3
+  // Obj 12: Page 3 Content
+  // Obj 13: Page 4
+  // Obj 14: Page 4 Content
+
+  const catalogObj = `<<\n  /Type /Catalog\n  /Pages 3 0 R\n>>`;
+  const outlinesObj = `<<\n  /Type /Outlines\n  /Count 0\n>>`;
+  const pagesObj = `<<\n  /Type /Pages\n  /Kids [7 0 R 9 0 R 11 0 R 13 0 R]\n  /Count 4\n>>`;
+  const fontF1Obj = `<<\n  /Type /Font\n  /Subtype /Type1\n  /BaseFont /Helvetica\n>>`;
+  const fontF2Obj = `<<\n  /Type /Font\n  /Subtype /Type1\n  /BaseFont /Helvetica-Bold\n>>`;
+  const fontF3Obj = `<<\n  /Type /Font\n  /Subtype /Type1\n  /BaseFont /Helvetica-Oblique\n>>`;
+
+  const resources = `/Resources << /Font << /F1 4 0 R /F2 5 0 R /F3 6 0 R >> >>`;
+
+  const page1Obj = `<<\n  /Type /Page\n  /Parent 3 0 R\n  /MediaBox [0 0 595.28 841.89]\n  ${resources}\n  /Contents 8 0 R\n>>`;
+  const page1ContentObj = `<< /Length ${Buffer.byteLength(page1Stream, 'utf8')} >>\nstream${page1Stream}\nendstream`;
+
+  const page2Obj = `<<\n  /Type /Page\n  /Parent 3 0 R\n  /MediaBox [0 0 595.28 841.89]\n  ${resources}\n  /Contents 10 0 R\n>>`;
+  const page2ContentObj = `<< /Length ${Buffer.byteLength(page2Stream, 'utf8')} >>\nstream${page2Stream}\nendstream`;
+
+  const page3Obj = `<<\n  /Type /Page\n  /Parent 3 0 R\n  /MediaBox [0 0 595.28 841.89]\n  ${resources}\n  /Contents 12 0 R\n>>`;
+  const page3ContentObj = `<< /Length ${Buffer.byteLength(page3Stream, 'utf8')} >>\nstream${page3Stream}\nendstream`;
+
+  const page4Obj = `<<\n  /Type /Page\n  /Parent 3 0 R\n  /MediaBox [0 0 595.28 841.89]\n  ${resources}\n  /Contents 14 0 R\n>>`;
+  const page4ContentObj = `<< /Length ${Buffer.byteLength(page4Stream, 'utf8')} >>\nstream${page4Stream}\nendstream`;
+
+  const rawObjects = [
+    catalogObj,        // 1
+    outlinesObj,       // 2
+    pagesObj,          // 3
+    fontF1Obj,         // 4
+    fontF2Obj,         // 5
+    fontF3Obj,         // 6
+    page1Obj,          // 7
+    page1ContentObj,   // 8
+    page2Obj,          // 9
+    page2ContentObj,   // 10
+    page3Obj,          // 11
+    page3ContentObj,   // 12
+    page4Obj,          // 13
+    page4ContentObj    // 14
+  ];
+
+  // Build PDF buffer
+  let pdf = '%PDF-1.4\n%\xE2\xE3\xCF\xD3\n';
+  const offsets = [];
+
+  for (let i = 0; i < rawObjects.length; i++) {
+    const objNum = i + 1;
+    offsets.push(Buffer.byteLength(pdf, 'utf8'));
+    pdf += `${objNum} 0 obj\n${rawObjects[i]}\nendobj\n`;
+  }
+
+  const startxref = Buffer.byteLength(pdf, 'utf8');
+  pdf += `xref\n0 ${rawObjects.length + 1}\n`;
+  pdf += '0000000000 65535 f \n';
+
+  for (let i = 0; i < offsets.length; i++) {
+    const offsetStr = String(offsets[i]).padStart(10, '0');
+    pdf += `${offsetStr} 00000 n \n`;
+  }
+
+  pdf += `trailer\n<<\n  /Size ${rawObjects.length + 1}\n  /Root 1 0 R\n>>\nstartxref\n${startxref}\n%%EOF\n`;
+
+  return pdf;
+}
+
+// Write to public/brochure/Gomzi_Lifesciences_Catalog_2026.pdf
+const publicDir = path.resolve(__dirname, '../public/brochure');
+if (!fs.existsSync(publicDir)) {
+  fs.mkdirSync(publicDir, { recursive: true });
+}
+
+const pdfContent = generateCatalogPdf();
+const targetPath = path.join(publicDir, 'Gomzi_Lifesciences_Catalog_2026.pdf');
+fs.writeFileSync(targetPath, pdfContent, 'utf8');
+console.log('Successfully generated catalog PDF at:', targetPath);

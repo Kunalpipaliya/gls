@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 40" fill="none">
+  <rect width="100" height="40" rx="8" fill="#F3F4F6"/>
+  <text x="10" y="26" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="900" font-size="20" fill="#15803D" font-style="italic">fssai</text>
+  <path d="M72 15C74 13 77 13 79 15C81 17 81 20 79 22L72 28L68 24C66 22 66 19 68 17C70 15 72 15 72 15Z" fill="#15803D" fill-opacity="0.3"/>
+  <text x="56" y="34" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="700" font-size="6" fill="#166534">LIC. 10020021005234</text>
+</svg>

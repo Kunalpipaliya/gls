@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    @apply bg-[#F9FBF4] text-[#101F18] antialiased overflow-x-hidden;
+  }
+
+  /* One consistent typeface across the entire site */
+  h1, h2, h3, h4 {
+    font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+  }
+}
+
+/* Custom scrollbar in fresh-green tones */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #EFF4DF;
+}
+::-webkit-scrollbar-thumb {
+  background: #A2C15E;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #86C33A;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 3D Product Shelf Reflection */
+.product-reflection {
+  -webkit-box-reflect: below 2px linear-gradient(transparent, transparent 70%, rgba(0, 0, 0, 0.15));
+}
+
+.product-reflection-subtle {
+  -webkit-box-reflect: below 2px linear-gradient(transparent, transparent 80%, rgba(0, 0, 0, 0.08));
+}
+
+/* Subtle float keyframe */
+@keyframes softFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-soft-float {
+  animation: softFloat 4s ease-in-out infinite;
+}
+
+.animate-soft-float-delayed {
+  animation: softFloat 4.5s ease-in-out infinite 1.5s;
+}
+
+/* Fresh-green glow highlight */
+.hero-glow-radial {
+  background: radial-gradient(circle at 60% 50%, rgba(134, 195, 58, 0.16) 0%, rgba(249, 251, 244, 0) 70%);
+}
+
+/* Fine botanical dot texture for editorial sections */
+.texture-botanical {
+  background-image: radial-gradient(rgba(16, 31, 24, 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Italic accent kept in the same typeface */
+.italic-display {
+  font-style: italic;
+  font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+}
+
+/* Infinite Marquee Animation */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-infinite {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 25s linear infinite;
+}
+
+.animate-marquee-infinite:hover {
+  animation-play-state: paused;
+}
