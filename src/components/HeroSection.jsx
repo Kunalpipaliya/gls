@@ -320,18 +320,18 @@ export default function HeroSection({ onShopNow, onDownloadBrochure, onSelectPro
               </div>
 
               {/* Quick Feature Badges below */}
-              <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-                <div className="bg-white rounded-2xl border border-[#DDE8C2] p-2">
-                  <div className="text-xs font-bold text-[#1B2F0A]">5g Bio-Protein</div>
-                  <div className="text-[10px] text-[#8A9388]">In Every Sachet</div>
+              <div className="mt-3 sm:mt-4 grid grid-cols-3 gap-1.5 sm:gap-2.5 text-center">
+                <div className="bg-white/95 rounded-xl sm:rounded-2xl border border-[#DDE8C2] py-2 px-1 sm:p-2.5 flex flex-col items-center justify-center shadow-2xs hover:border-[#86C33A]/60 transition-colors">
+                  <div className="text-[10.5px] sm:text-xs font-bold text-[#1B2F0A] leading-tight">5g Bio-Protein</div>
+                  <div className="text-[8.5px] sm:text-[10px] text-[#8A9388] mt-0.5 leading-tight">In Every Sachet</div>
                 </div>
-                <div className="bg-white rounded-2xl border border-[#DDE8C2] p-2">
-                  <div className="text-xs font-bold text-[#1B2F0A]">100% Real Grains</div>
-                  <div className="text-[10px] text-[#8A9388]">Soft Puffed Rotis</div>
+                <div className="bg-white/95 rounded-xl sm:rounded-2xl border border-[#DDE8C2] py-2 px-1 sm:p-2.5 flex flex-col items-center justify-center shadow-2xs hover:border-[#86C33A]/60 transition-colors">
+                  <div className="text-[10.5px] sm:text-xs font-bold text-[#1B2F0A] leading-tight">100% Real Grains</div>
+                  <div className="text-[8.5px] sm:text-[10px] text-[#8A9388] mt-0.5 leading-tight">Soft Puffed Rotis</div>
                 </div>
-                <div className="bg-white rounded-2xl border border-[#DDE8C2] p-2">
-                  <div className="text-xs font-bold text-[#1B2F0A]">0g Cane Sugar</div>
-                  <div className="text-[10px] text-[#8A9388]">Lab Certified Clean</div>
+                <div className="bg-white/95 rounded-xl sm:rounded-2xl border border-[#DDE8C2] py-2 px-1 sm:p-2.5 flex flex-col items-center justify-center shadow-2xs hover:border-[#86C33A]/60 transition-colors">
+                  <div className="text-[10.5px] sm:text-xs font-bold text-[#1B2F0A] leading-tight">0g Cane Sugar</div>
+                  <div className="text-[8.5px] sm:text-[10px] text-[#8A9388] mt-0.5 leading-tight">Lab Certified Clean</div>
                 </div>
               </div>
 

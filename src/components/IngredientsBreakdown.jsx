@@ -118,7 +118,7 @@ export default function IngredientsBreakdown() {
                   : 'text-[#5A5A52] hover:text-black hover:bg-[#F9FBF4]'
               }`}
             >
-              Instant Spiced Tea
+              Tea
             </button>
             <button
               onClick={() => setSelectedProduct('coffee')}
@@ -128,7 +128,7 @@ export default function IngredientsBreakdown() {
                   : 'text-[#5A5A52] hover:text-black hover:bg-[#F9FBF4]'
               }`}
             >
-              Instant Mocha Coffee
+              Coffee
             </button>
             <button
               onClick={() => setSelectedProduct('atta')}
@@ -138,7 +138,7 @@ export default function IngredientsBreakdown() {
                   : 'text-[#5A5A52] hover:text-black hover:bg-[#F9FBF4]'
               }`}
             >
-              Multi Grain Atta
+              Atta
             </button>
           </div>
         </div>
